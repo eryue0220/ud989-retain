@@ -1,4 +1,4 @@
-$(function(){
+$(function() {
 
     var model = {
         init: function() {
@@ -20,7 +20,8 @@ $(function(){
     var octopus = {
         addNewNote: function(noteStr) {
             model.add({
-                content: noteStr
+                content: noteStr,
+                date: +(new Date())
             });
             view.render();
         },
@@ -41,21 +42,22 @@ $(function(){
             this.noteList = $('#notes');
             var newNoteForm = $('#new-note-form');
             var newNoteContent = $('#new-note-content');
-            newNoteForm.submit(function(e){
+            newNoteForm.submit(function(e) {
                 octopus.addNewNote(newNoteContent.val());
                 newNoteContent.val('');
                 e.preventDefault();
             });
             view.render();
         },
-        render: function(){
+        render: function() {
             var htmlStr = '';
-            octopus.getNotes().forEach(function(note){
-                htmlStr += '<li class="note">'+
-                        note.content +
+            octopus.getNotes().forEach(function(note) {
+                htmlStr += '<li class="note">' +
+                    '<span class="note-date">' + new Date(note.date) + '</span>' +
+                    note.content +
                     '</li>';
             });
-            this.noteList.html( htmlStr );
+            this.noteList.html(htmlStr);
         }
     };
 
